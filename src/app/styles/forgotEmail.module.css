@@ -1,0 +1,91 @@
+/* General Form Container */
+.formContainer {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .formHeader {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  /* Card Styling */
+  .card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Form Elements */
+  .formGroup {
+    margin-bottom: 20px;
+  }
+  
+ 
+  /* Input Field with Error */
+  .inputField {
+    width: 100%;
+  }
+  
+  .inputFieldError {
+    border-color: var(--error-color);
+  }
+  
+  .errorText {
+    color: var(--error-color);
+    font-size: 0.875rem;
+    margin-top: 5px;
+  }
+  
+  /* Button Styling */
+  .submitButton {
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submitButton:hover {
+    background-color: var(--primary-color);
+  }
+  
+  .submitButton:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  
+  /* Radio Button Group */
+  .radioGroup {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+  
+  .radioGroup input[type="radio"] {
+    margin: 0;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .formContainer {
+      padding: 10px;
+    }
+  
+    .formHeader {
+      font-size: 1.25rem;
+    }
+  
+    .submitButton {
+      width: 100%;
+    }
+  }
+  

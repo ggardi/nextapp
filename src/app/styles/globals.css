@@ -1,0 +1,47 @@
+/* styles/globals.css */
+:root {
+    --primary-color: #262A82;
+    --secondary-color: #6B6B6B;
+    --background-color: #f9f9f9;
+    --error-color: #BB1328;
+    --warning-color: #f9a406;
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --border-radius: 8px;
+}
+
+
+@font-face {
+    font-family: 'GuildCircularWebMedium';
+    src: url('/../fonts/GuildCircularWeb-Medium.woff') format('woff2'),
+        url('/font/MyCustomFont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+body {
+    font-family: GuildCircularWeb, Helvetica, Arial, sans-serif;
+    background-color: var(--background-color);
+    min-height: 100vh;
+    padding: 20px;
+    margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--primary-color);
+    font-weight: bold;
+    line-height: 120%;
+}
+
+h2 {
+    font-size: 26px;
+    font-weight: 900;
+}
+.error {
+    color: var(--error-color)
+}
