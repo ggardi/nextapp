@@ -31,6 +31,7 @@ export async function POST(request) {
 
     try {
         // Forwarding the request to the accounts-backend API
+        console.log('api', process.env.RECOVER_EMAIL_API)
         const response = await fetch(process.env.RECOVER_EMAIL_API, {
             method: 'POST',
             headers: {

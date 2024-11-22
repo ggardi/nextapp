@@ -72,7 +72,7 @@ export default function ForgotEmail() {
     setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let formErrors = {};
 
@@ -84,12 +84,34 @@ export default function ForgotEmail() {
     });
 
     if (Object.keys(formErrors).length === 0) {
-      setSubmitted(true);
-      setRecoveredEmails(["user@example.com", "abc@gm.com"]);
+      //setSubmitted(true);
+      //setRecoveredEmails(["user@example.com", "abc@gm.com"]);
       //setRecoveredEmails(["abc@gm.com"]);
+
+      try {
+        const response = await fetch('/api/forgot-email', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ formValues}),
+        });
+
+        console.log('response', response)
+  
+  
+        const result = await response.json();
+        console.log('Submission successful:', result);
+      } catch (error) {
+        console.log('Submission Error:', error);
+      } finally {
+        setSubmitted(false);
+      }
     } else {
       setErrors(formErrors);
     }
+
+
   };
 
   // Render Fields
