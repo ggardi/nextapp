@@ -1,46 +1,51 @@
 export async function POST(request) {
-    const body = await request.json();
-    const { infoType, ssn, dob, zip, loanNumber } = body;
 
-    // Simple validation
-    if (infoType === "personal") {
-        if (!ssn || !dob || !zip) {
-            return new Response(
-                JSON.stringify({ message: 'Invalid input for personal info' }),
-                {
-                    status: 400,
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                }
-            );
-        }
-    } else if (infoType === "loan") {
-        if (!loanNumber || !zip) {
-            return new Response(
-                JSON.stringify({ message: 'Invalid input for loan info' }),
-                {
-                    status: 400,
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                }
-            );
-        }
+    console.log('FORGOT_EMAIL_API:', process.env.FORGOT_EMAIL_API); 
+    
+    // Parse the incoming JSON body
+    const body = await request.json();
+
+    // Check if formValues exists and is not empty
+    if (!body.formValues || Object.keys(body.formValues).length === 0) {
+        return new Response(
+            JSON.stringify({ message: 'formValues is required and cannot be empty' }),
+            { status: 400, headers: { 'Content-Type': 'application/json' } }
+        );
     }
 
+    // Destructure from formValues
+    const { infoType, ssn, dob, zip, loanNumber } = body.formValues;
+
+    console.log(body)
+  
     try {
-        // Forwarding the request to the accounts-backend API
-        console.log('api', process.env.RECOVER_EMAIL_API)
-        const response = await fetch(process.env.RECOVER_EMAIL_API, {
+        console.log('Calling external API...');
+
+        const formData = new FormData();
+
+        if (infoType) formData.append('info_type', infoType);  
+        if (ssn) formData.append('last_4_ssn', ssn);           
+        if (loanNumber) formData.append('loan_number', loanNumber); 
+        if (dob) formData.append('dob', dob);                   
+        if (zip) formData.append('zip', zip);                   
+
+        console.log('form data', formData)
+
+        for (let [key, value] of formData.entries()) {
+            console.log('FormData field:', key, value);
+        }
+
+        const response = await fetch(process.env.FORGOT_EMAIL_API, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Accept': 'application/json',   
+                'X-MYACCOUNT-SERVICE-TOKEN': '670966bcb79255.39595807', 
             },
-            body: JSON.stringify({ infoType, ssn, dob, zip, loanNumber }),
+            body: formData, 
         });
 
-        // Check if the response is successful
+        console.log('Response:', response);
+
         if (!response.ok) {
             const errorData = await response.json();
             return new Response(
@@ -49,29 +54,16 @@ export async function POST(request) {
             );
         }
 
-        // Parse the JSON response from the external API
         const responseData = await response.json();
-
-        // Return the response to the client
         return new Response(
             JSON.stringify({ message: 'Request forwarded successfully!', ...responseData }),
-            {
-                status: 200,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            }
+            { status: 200, headers: { 'Content-Type': 'application/json' } }
         );
-
     } catch (error) {
+        console.error('Error:', error);
         return new Response(
             JSON.stringify({ message: 'Error connecting to external API' }),
-            {
-                status: 500,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            }
+            { status: 500, headers: { 'Content-Type': 'application/json' } }
         );
     }
 }

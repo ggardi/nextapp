@@ -34,7 +34,7 @@ const fieldsConfig = {
   ],
   loan: [
     { label: "Loan number", name: "loanNumber", maxLength: 10 },
-    { label: "Zip code", name: "zip", maxLength: 5 },
+    { label: "Last 4 of SSN", name: "ssn", maxLength: 4 },
   ],
 };
 
@@ -97,7 +97,6 @@ export default function ForgotEmail() {
           body: JSON.stringify({ formValues}),
         });
 
-        console.log('response', response)
   
   
         const result = await response.json();
